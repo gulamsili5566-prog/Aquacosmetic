@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlowCosmetics</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+body {font-family: 'Poppins', sans-serif; margin:0; background:#fff;}
+header {background:#ff4f81; color:#fff; text-align:center; padding:20px;}
+.hero {text-align:center; padding:50px; background:#ffe6ef;}
+.hero h1 {font-size:32px;}
+.hero button {padding:12px 25px; background:#ff4f81; color:#fff; border:none; border-radius:25px; cursor:pointer;}
+.products {display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; padding:20px;}
+.card {border:1px solid #eee; padding:15px; border-radius:15px; text-align:center; transition:0.3s;}
+.card:hover {transform:translateY(-5px);}
+.card img {width:100%; height:180px; object-fit:cover;}
+.price {color:#ff4f81; font-weight:bold;}
+button.pay {background:#28a745; color:white;}
+button.cod {background:#ff9800; color:white;}
+section {padding:30px; text-align:center;}
+footer {background:#333; color:#fff; text-align:center; padding:15px;}
+.whatsapp {position:fixed; bottom:20px; right:20px; background:#25D366; color:#fff; padding:12px 15px; border-radius:50px; text-decoration:none;}
+.modal {display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6);}
+.modal-content {background:#fff; padding:20px; margin:10% auto; width:300px; border-radius:10px;}
+input, textarea {width:100%; padding:8px; margin:5px 0;}
+</style>
+</head>
+<body>
+<header>
+<h1>GlowCosmetics</h1>
+<p>Your Skin, Your Glow</p>
+</header>
+
+<section class="hero">
+<h1>Glow Naturally with GlowCosmetics</h1>
+<p>Premium skincare for radiant beauty</p>
+<button onclick="document.querySelector('.products').scrollIntoView()">Shop Now</button>
+</section>
+
+<section class="products">
+
+<div class="card">
+<img src="https://via.placeholder.com/200">
+<h3>Pigmentation Cream</h3>
+<p>Reduces dark spots</p>
+<div class="price">₹499</div>
+<button class="pay" onclick="payNow('Pigmentation Cream',499)">Pay Now</button>
+<button class="cod" onclick="openForm('Pigmentation Cream',499)">COD</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/200">
+<h3>Brightening Cream</h3>
+<p>Enhances glow</p>
+<div class="price">₹599</div>
+<button class="pay" onclick="payNow('Brightening Cream',599)">Pay Now</button>
+<button class="cod" onclick="openForm('Brightening Cream',599)">COD</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/200">
+<h3>Sunscreen SPF 50</h3>
+<p>UV protection</p>
+<div class="price">₹399</div>
+<button class="pay" onclick="payNow('Sunscreen',399)">Pay Now</button>
+<button class="cod" onclick="openForm('Sunscreen',399)">COD</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/200">
+<h3>Facewash</h3>
+<p>Gentle cleansing</p>
+<div class="price">₹299</div>
+<button class="pay" onclick="payNow('Facewash',299)">Pay Now</button>
+<button class="cod" onclick="openForm('Facewash',299)">COD</button>
+</div>
+
+</section>
+
+<section>
+<h2>Scan & Pay via UPI</h2>
+<img src="upi-qr.png" width="200">
+<p>UPI ID: kundankhatri1072-1@okhdfcbank</p>
+<p>After payment, send screenshot on WhatsApp</p>
+</section>
+
+<section>
+<h2>Customer Reviews</h2>
+<p>"Amazing glow in 7 days!" - Riya</p>
+<p>"Best sunscreen I've used." - Aman</p>
+<p>"Skin feels so smooth." - Neha</p>
+</section>
+
+<section>
+<h2>About GlowCosmetics</h2>
+<p>We deliver premium skincare with safe ingredients to enhance your natural glow.</p>
+</section>
+
+<div class="modal" id="orderForm">
+<div class="modal-content">
+<h3>Cash on Delivery</h3>
+<input type="text" id="name" placeholder="Name">
+<input type="text" id="phone" placeholder="Phone">
+<textarea id="address" placeholder="Address"></textarea>
+<button onclick="submitOrder()">Place Order</button>
+</div>
+</div>
+
+<a href="https://wa.me/91XXXXXXXXXX" class="whatsapp">WhatsApp</a>
+
+<footer>
+<p>Contact: glowcosmetics@email.com</p>
+<p>© 2026 GlowCosmetics</p>
+</footer>
+
+<script>
+let selectedProduct = '';
+let selectedPrice = 0;
+
+function payNow(product, price){
+var options = {
+"key": "YOUR_RAZORPAY_KEY",
+"amount": price*100,
+"currency": "INR",
+"name": "GlowCosmetics",
+"description": product,
+"handler": function(){alert('Payment Successful for '+product);}
+};
+new Razorpay(options).open();
+}
+
+function openForm(product, price){
+selectedProduct = product;
+selectedPrice = price;
+document.getElementById('orderForm').style.display='block';
+}
+
+function submitOrder(){
+let name=document.getElementById('name').value;
+let phone=document.getElementById('phone').value;
+let address=document.getElementById('address').value;
+if(name && phone && address){
+alert('Order Placed! '+selectedProduct+' ₹'+selectedPrice);
+document.getElementById('orderForm').style.display='none';
+}else{
+alert('Fill all details');
+}
+}
+</script>
+
+</body>
+</html>
